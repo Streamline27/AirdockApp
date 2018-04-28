@@ -1,0 +1,4 @@
+include ':app'
+include ':airdock-api'
+
+project(':airdock-api').projectDir = new File(settingsDir, '../AirdockApi/')
