@@ -1,4 +1,4 @@
-package tti.lv.airdockapp
+package tti.lv.airdockapp.domain
 
 import dagger.Provides
 import javax.inject.Inject

@@ -26,10 +26,8 @@ android {
 
 dependencies {
 
-    implementation project(':airdock-api')
-
     /* Kotlin */
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     /* RxKotlin */
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
@@ -38,7 +36,17 @@ dependencies {
 
     /* Dagger 2 */
     implementation 'com.google.dagger:dagger:2.13'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
     kapt 'com.google.dagger:dagger-compiler:2.13'
+
+    /* Retrofit */
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    /* JWT */
+    implementation 'io.jsonwebtoken:jjwt:0.9.0'
 
     /* Android specific */
     implementation 'com.android.support:appcompat-v7:27.1.1'
