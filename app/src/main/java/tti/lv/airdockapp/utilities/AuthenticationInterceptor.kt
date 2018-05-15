@@ -6,7 +6,7 @@ import okhttp3.Response
 class AuthenticationInterceptor(private val provider: SharedPreferenceProvider) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = provider.receiveToken()
+        val token = provider.getToken()
         if (token != null && !token.isEmpty()) {
             return chain.proceed(
                     chain.request().newBuilder()

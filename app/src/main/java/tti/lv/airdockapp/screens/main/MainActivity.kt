@@ -1,5 +1,6 @@
 package tti.lv.airdockapp.screens.main
 
+import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +11,15 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import tti.lv.airdockapp.App
 import tti.lv.airdockapp.R
-import tti.lv.airdockapp.di.DaggerAppComponent
+import tti.lv.airdockapp.screens.login.LoginActivity
 import tti.lv.airdockapp.screens.main.requests.RequestsFragment
 import tti.lv.airdockapp.screens.main.tasks.TaskListFragment
+import tti.lv.airdockapp.utilities.SharedPreferenceProvider
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), TaskListFragment.OnFragmentInteractionListener, RequestsFragment.OnFragmentInteractionListener {
+
+    @Inject lateinit var preferenceProvider: SharedPreferenceProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +38,13 @@ class MainActivity : AppCompatActivity(), TaskListFragment.OnFragmentInteraction
                 when(item.itemId) {
                     R.id.nav_first_fragment  -> TaskListFragment.newInstance("", "").switchTo()
                     R.id.nav_second_fragment -> RequestsFragment.newInstance("", "").switchTo()
-                    R.id.nav_third_fragment  -> Toast.makeText(applicationContext, "Third", Toast.LENGTH_SHORT).show()
+                    R.id.nav_third_fragment  -> {
+                        Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_SHORT).show()
+                        preferenceProvider.eraseToken()
+                        startActivity(Intent(this@MainActivity, LoginActivity::class.java).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        })
+                    }
                 }
                 return true
             }

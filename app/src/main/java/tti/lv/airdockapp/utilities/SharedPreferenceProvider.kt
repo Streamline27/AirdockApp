@@ -1,28 +1,32 @@
 package tti.lv.airdockapp.utilities
 
 import android.content.Context
+import android.content.SharedPreferences
 import tti.lv.airdockapp.domain.User
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 class SharedPreferenceProvider (
-        private val context: Context
+        context: Context
 ) {
-
-    private var token : String? = null
-    private var user : User? = null
+    private val sharedPreferences : SharedPreferences = context.getSharedPreferences("tti.lv.airdock.FILES", Context.MODE_PRIVATE);
 
     fun storeToken(token : String) {
-        this.token = token
+        with(sharedPreferences.edit()) {
+            putString("auth_token", token)
+            apply()
+        }
     }
 
-    fun receiveToken() : String? {
-        return this.token
+    fun eraseToken() {
+        with(sharedPreferences.edit()) {
+            remove("auth_token")
+            apply()
+        }
     }
 
-    fun storeUser(user : User) {
-        this.user = user
-    }
+
+    fun getToken() : String? = sharedPreferences.getString("auth_token", null)
 
 }

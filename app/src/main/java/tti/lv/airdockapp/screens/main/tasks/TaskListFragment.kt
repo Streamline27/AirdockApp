@@ -4,10 +4,14 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.Toast
+import io.reactivex.disposables.Disposable
 import tti.lv.airdockapp.App
 import tti.lv.airdockapp.R
 import tti.lv.airdockapp.domain.Task
@@ -27,9 +31,10 @@ class TaskListFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
+    private val mDisp = mutableListOf<Disposable>()
+
     @Inject lateinit var mViewModel: TaskListViewModel
 
-    private lateinit var mAdapter : TaskListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,31 +44,42 @@ class TaskListFragment : Fragment() {
         }
     }
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: TaskListAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_task_list, container, false)
-        val tasksListView = view.findViewById<ListView>(R.id.listView_tasks)
         (activity?.application as App).dependencyGraph.inject(this)
 
-        mAdapter = TaskListAdapter(context, emptyList())
-        tasksListView.adapter = mAdapter
+        viewManager = LinearLayoutManager(context)
+        viewAdapter = TaskListAdapter(ArrayList())
 
-        mViewModel.tasks().subscribe{ tasks -> addTasks(tasks) }
+        recyclerView = view.findViewById<RecyclerView>(R.id.listView_tasks).apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
+        mDisp += mViewModel.tasks().subscribe{ tasks -> addTasks(tasks) }
+        mDisp += mViewModel.taskSelected().subscribe{ task -> Toast.makeText(context, task.title, Toast.LENGTH_SHORT ).show() }
+
+        mDisp += viewAdapter.itemClicks().subscribe{ (position, task) -> mViewModel.selectTask(position, task) }
+
+        mViewModel.fetchTasks()
 
         return view
     }
 
-    private fun addTasks(tasks : List<TaskDto>) {
-            mAdapter.addAll(tasks.toMutableList())
-            mAdapter.notifyDataSetChanged()
+    fun addTasks(tasks : List<TaskDto>) {
+        viewAdapter.tasks.addAll(tasks)
+        viewAdapter.notifyDataSetChanged()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-
-
 
     /**
      * This interface must be implemented by activities that contain this
@@ -112,6 +128,7 @@ class TaskListFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        mDisp.forEach{ it.dispose() }
         listener = null
     }
 }

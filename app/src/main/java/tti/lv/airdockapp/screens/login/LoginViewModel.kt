@@ -1,5 +1,6 @@
 package tti.lv.airdockapp.screens.login
 
+import io.jsonwebtoken.Jwts
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
@@ -27,6 +28,7 @@ class LoginViewModel @Inject constructor(
     fun authorizeUser() {
 
         authorizationStart.onNext(Any())
+
         authorizationApi.getToken(LoginDto(username, password))
                 .subscribeOn(Schedulers.io())
                 .subscribe{ response ->
@@ -41,9 +43,10 @@ class LoginViewModel @Inject constructor(
                 }
     }
 
-    fun authorizationFinish() = Observables.zip(authorizationSuccess, authorizationFail).observeOn(AndroidSchedulers.mainThread())
+    fun authorizationFinish() = authorizationSuccess.mergeWith(authorizationFail).observeOn(AndroidSchedulers.mainThread())
     fun authorizationFail() = authorizationFail.observeOn(AndroidSchedulers.mainThread())
     fun authorizationSuccess() = authorizationSuccess.observeOn(AndroidSchedulers.mainThread())
     fun authorizationStart() = authorizationStart.observeOn(AndroidSchedulers.mainThread())
+
 
 }
