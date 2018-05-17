@@ -14,10 +14,11 @@ import tti.lv.airdockapp.R
 import tti.lv.airdockapp.screens.login.LoginActivity
 import tti.lv.airdockapp.screens.main.requests.RequestsFragment
 import tti.lv.airdockapp.screens.main.tasks.TaskListFragment
+import tti.lv.airdockapp.screens.main.tasks.TasksFragment
 import tti.lv.airdockapp.utilities.SharedPreferenceProvider
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), TaskListFragment.OnFragmentInteractionListener, RequestsFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), RequestsFragment.OnFragmentInteractionListener {
 
     @Inject lateinit var preferenceProvider: SharedPreferenceProvider
 
@@ -29,14 +30,14 @@ class MainActivity : AppCompatActivity(), TaskListFragment.OnFragmentInteraction
 
         if (savedInstanceState == null)
             supportFragmentManager.beginTransaction()
-                    .add(R.id.main_container, TaskListFragment())
+                    .add(R.id.main_container, TasksFragment())
                     .commit()
 
         bottom_navigation.setOnNavigationItemSelectedListener( object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
                 when(item.itemId) {
-                    R.id.nav_first_fragment  -> TaskListFragment.newInstance("", "").switchTo()
+                    R.id.nav_first_fragment  -> TasksFragment.newInstance("", "").switchTo()
                     R.id.nav_second_fragment -> RequestsFragment.newInstance("", "").switchTo()
                     R.id.nav_third_fragment  -> {
                         Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_SHORT).show()

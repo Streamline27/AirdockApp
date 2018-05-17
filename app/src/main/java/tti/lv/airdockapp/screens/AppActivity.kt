@@ -3,9 +3,7 @@ package tti.lv.airdockapp.screens
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import tti.lv.airdockapp.R
+
 
 import tti.lv.airdockapp.App
 import tti.lv.airdockapp.screens.login.LoginActivity
