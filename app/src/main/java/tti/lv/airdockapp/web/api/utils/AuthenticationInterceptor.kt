@@ -1,7 +1,8 @@
-package tti.lv.airdockapp.utilities
+package tti.lv.airdockapp.web.api.utils
 
 import okhttp3.Interceptor
 import okhttp3.Response
+import tti.lv.airdockapp.utilities.SharedPreferenceProvider
 
 class AuthenticationInterceptor(private val provider: SharedPreferenceProvider) : Interceptor {
 

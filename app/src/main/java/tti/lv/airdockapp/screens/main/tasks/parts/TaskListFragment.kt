@@ -1,7 +1,5 @@
-package tti.lv.airdockapp.screens.main.tasks
+package tti.lv.airdockapp.screens.main.tasks.parts
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,13 +7,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
-import android.widget.Toast
 import io.reactivex.disposables.Disposable
 import tti.lv.airdockapp.App
 import tti.lv.airdockapp.R
-import tti.lv.airdockapp.domain.Task
-import tti.lv.airdockapp.web.dto.TaskDto
+import tti.lv.airdockapp.screens.main.tasks.TaskViewModel
+import tti.lv.airdockapp.web.dto.TaskDTO
 import javax.inject.Inject
 
 
@@ -32,7 +28,7 @@ class TaskListFragment : Fragment() {
 
     private val mDisp = mutableListOf<Disposable>()
 
-    @Inject lateinit var mViewModel: TaskListViewModel
+    @Inject lateinit var mViewModel: TaskViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,29 +49,37 @@ class TaskListFragment : Fragment() {
         (activity?.application as App).dependencyGraph.inject(this)
 
         viewManager = LinearLayoutManager(context)
-        viewAdapter = TaskListAdapter(ArrayList())
+        viewAdapter = TaskListAdapter(context!!, ArrayList())
 
         recyclerView = view.findViewById<RecyclerView>(R.id.listView_tasks).apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
 
-        mDisp += mViewModel.tasks().subscribe{ tasks -> addTasks(tasks) }
-        mDisp += mViewModel.taskSelected().subscribe{ task -> Toast.makeText(context, task.title, Toast.LENGTH_SHORT ).show() }
+        mDisp += viewAdapter.itemClicks().subscribe{ (_, task) -> mViewModel.selectTask(task) }
 
-        mDisp += viewAdapter.itemClicks().subscribe{ (position, task) -> mViewModel.selectTask(position, task) }
+        mDisp += mViewModel.taskSelected().subscribe{ task -> highlightSelectedTask(task) }
+        mDisp += mViewModel.taskStatusChanged().subscribe{ task -> viewAdapter.changeTaskStatus(task.id, task.status) }
+        mDisp += mViewModel.tasks().subscribe { tasks ->
+            addTasks(tasks)
+            highlightSelectedTask(mViewModel.getSelectedTask())
+        }
 
         return view
     }
 
-    fun addTasks(tasks : List<TaskDto>) {
+    fun addTasks(tasks : List<TaskDTO>) {
+        viewAdapter.tasks.clear()
         viewAdapter.tasks.addAll(tasks)
         viewAdapter.notifyDataSetChanged()
     }
 
+    fun highlightSelectedTask(task: TaskDTO) {
+        viewAdapter.highlight(task)
+    }
+
 
     companion object {
-
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
                 TaskListFragment().apply {

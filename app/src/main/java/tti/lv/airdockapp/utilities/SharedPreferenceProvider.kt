@@ -2,9 +2,6 @@ package tti.lv.airdockapp.utilities
 
 import android.content.Context
 import android.content.SharedPreferences
-import tti.lv.airdockapp.domain.User
-import javax.inject.Inject
-import javax.inject.Singleton
 
 
 class SharedPreferenceProvider (

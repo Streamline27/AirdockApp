@@ -3,7 +3,7 @@ package tti.lv.airdockapp.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import tti.lv.airdockapp.utilities.ApiGenerator
+import tti.lv.airdockapp.web.api.utils.ApiGenerator
 import tti.lv.airdockapp.utilities.SharedPreferenceProvider
 import tti.lv.airdockapp.web.api.AuthorizationApi
 import tti.lv.airdockapp.web.api.TaskApi

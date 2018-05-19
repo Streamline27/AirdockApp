@@ -1,16 +1,16 @@
 package tti.lv.airdockapp.screens.main.tasks
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import tti.lv.airdockapp.App
 
 import tti.lv.airdockapp.R
+import tti.lv.airdockapp.screens.main.tasks.parts.TaskDetailsFragment
+import tti.lv.airdockapp.screens.main.tasks.parts.TaskHistoryFragment
+import tti.lv.airdockapp.screens.main.tasks.parts.TaskListFragment
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,7 +23,7 @@ class TasksFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    @Inject lateinit var mViewModel: TaskListViewModel
+    @Inject lateinit var mViewModel: TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class TasksFragment : Fragment() {
 
         childFragmentManager.beginTransaction()
                 .add(R.id.task_list_container, TaskListFragment.newInstance("", ""))
-                .add(R.id.task_details_container, TaskDescriptionFragment.newInstance("", ""))
+                .add(R.id.task_details_container, TaskDetailsFragment.newInstance("", ""))
                 .add(R.id.task_history_container, TaskHistoryFragment.newInstance("", ""))
                 .commit()
 

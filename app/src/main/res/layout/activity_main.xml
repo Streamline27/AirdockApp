@@ -42,8 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
-        app:itemBackground="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@color/colorAccent"
         app:itemTextColor="@color/colorAccent"
         app:menu="@menu/bottom_nav_menu" />

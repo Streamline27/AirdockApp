@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
     private fun showProgressDialog() {
         mProgressDialog = ProgressDialog(this)
         mProgressDialog?.isIndeterminate = true
-        mProgressDialog?.setMessage("Authenticating...")
+        mProgressDialog?.setMessage("Logging in...")
         mProgressDialog?.show()
     }
 

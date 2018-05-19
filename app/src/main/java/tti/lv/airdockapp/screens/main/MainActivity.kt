@@ -13,7 +13,6 @@ import tti.lv.airdockapp.App
 import tti.lv.airdockapp.R
 import tti.lv.airdockapp.screens.login.LoginActivity
 import tti.lv.airdockapp.screens.main.requests.RequestsFragment
-import tti.lv.airdockapp.screens.main.tasks.TaskListFragment
 import tti.lv.airdockapp.screens.main.tasks.TasksFragment
 import tti.lv.airdockapp.utilities.SharedPreferenceProvider
 import javax.inject.Inject

@@ -4,9 +4,9 @@ import dagger.Component
 import tti.lv.airdockapp.screens.AppActivity
 import tti.lv.airdockapp.screens.login.LoginActivity
 import tti.lv.airdockapp.screens.main.MainActivity
-import tti.lv.airdockapp.screens.main.tasks.TaskDescriptionFragment
-import tti.lv.airdockapp.screens.main.tasks.TaskHistoryFragment
-import tti.lv.airdockapp.screens.main.tasks.TaskListFragment
+import tti.lv.airdockapp.screens.main.tasks.parts.TaskDetailsFragment
+import tti.lv.airdockapp.screens.main.tasks.parts.TaskHistoryFragment
+import tti.lv.airdockapp.screens.main.tasks.parts.TaskListFragment
 import tti.lv.airdockapp.screens.main.tasks.TasksFragment
 import javax.inject.Singleton
 
@@ -20,5 +20,5 @@ interface AppComponent {
     fun inject(target : TasksFragment)
     fun inject(target : TaskListFragment)
     fun inject(target : TaskHistoryFragment)
-    fun inject(target : TaskDescriptionFragment)
+    fun inject(target : TaskDetailsFragment)
 }

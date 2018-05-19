@@ -6,10 +6,10 @@
     android:id="@+id/item_task">
 
     <ImageView
+        android:id="@+id/imgStatus"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="12dp"
-        android:src="@mipmap/ic_status_todo"/>
+        android:layout_marginLeft="12dp"/>
 
     <LinearLayout
         android:orientation="vertical"
