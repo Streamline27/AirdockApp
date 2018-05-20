@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".screens.main.requests.parts.RequestEditActivity">
+
+    <!-- Toolbar -->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/toolbar_layout"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            app:title="Edit request details"
+            android:theme="?attr/actionBarTheme"/>
+
+    </android.support.design.widget.AppBarLayout><!-- End toolbar -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+        <!-- Left row -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimary"/>
+            <FrameLayout
+                android:id="@+id/task_list_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout> <!-- End left row -->
+
+
+        <!--<include layout="@layout/separator_vertical"/>-->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:layout_height="match_parent"
+            android:background="@drawable/panel_bg"
+            android:elevation="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/panel_bg">
+                <!-- Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/panel_bg"
+                    style="@style/Section"
+                    android:elevation="3dp">
+
+                    <!-- Title and status row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="0.75"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/textRequestId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="123"
+                                    style="@style/Header2"/>
+                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/textRequestTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Request caption"
+                                style="@style/Header1"/>
+                        </LinearLayout><!-- End titles -->
+                    </LinearLayout><!-- End title and status row -->
+                </LinearLayout> <!-- End header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Section">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        style="@style/SectionContent">
+
+                        <EditText
+                            android:id="@+id/editTextRequestDetails"
+                            android:padding="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/ArticleText"/>
+                    </LinearLayout>
+
+                </LinearLayout><!-- End description section -->
+
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Right row -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimary"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/colorSkyBlue"
+                    android:layout_gravity="left|bottom"
+                    android:src="@mipmap/ic_save"
+                    android:layout_margin="16dp" />
+            </FrameLayout>
+
+        </LinearLayout><!-- End right row -->
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -40,9 +40,9 @@ class TasksFragment : Fragment() {
         (activity?.application as App).dependencyGraph.inject(this)
 
         childFragmentManager.beginTransaction()
-                .add(R.id.task_list_container, TaskListFragment.newInstance("", ""))
-                .add(R.id.task_details_container, TaskDetailsFragment.newInstance("", ""))
-                .add(R.id.task_history_container, TaskHistoryFragment.newInstance("", ""))
+                .replace(R.id.task_list_container, TaskListFragment.newInstance("", ""))
+                .replace(R.id.task_details_container, TaskDetailsFragment.newInstance("", ""))
+                .replace(R.id.task_history_container, TaskHistoryFragment.newInstance("", ""))
                 .commit()
 
         mViewModel.fetchTasks()

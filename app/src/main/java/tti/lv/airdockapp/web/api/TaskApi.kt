@@ -8,8 +8,8 @@ import tti.lv.airdockapp.web.dto.TaskDTO
 import tti.lv.airdockapp.web.dto.TaskSmallDTO
 
 interface TaskApi {
-    @GET("/api/tasks")
-    fun getTasks() : Observable<List<TaskDTO>>
+    @GET("/api/worker/{workerId}/tasks")
+    fun getTasks(@Path("workerId") workerId : String) : Observable<List<TaskDTO>>
 
     @PUT("/api/task/{id}/status/{status}")
     fun updateTaskStatus(@Path("id") id : String, @Path("status") status : TaskDTO.Status) : Observable<TaskSmallDTO>

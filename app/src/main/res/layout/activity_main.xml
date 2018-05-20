@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:id="@+id/toolbar_layout"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -20,8 +21,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
-            android:theme="?attr/actionBarTheme"
-            android:minHeight="?attr/actionBarSize" />
+            android:theme="?attr/actionBarTheme"/>
 
     </android.support.design.widget.AppBarLayout><!-- End toolbar -->
 
@@ -44,8 +44,8 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/colorAccent"
-        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/colorWhite"
+        app:itemTextColor="@color/colorWhite"
         app:menu="@menu/bottom_nav_menu" />
     <!-- End bottom navigation -->
 

@@ -39,30 +39,27 @@ class TaskListFragment : Fragment() {
         }
     }
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: TaskListAdapter
-    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_task_list, container, false)
         (activity?.application as App).dependencyGraph.inject(this)
 
-        viewManager = LinearLayoutManager(context)
+        val viewManager = LinearLayoutManager(context)
         viewAdapter = TaskListAdapter(context!!, ArrayList())
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.listView_tasks).apply {
+        view.findViewById<RecyclerView>(R.id.listView_tasks).apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
 
         mDisp += viewAdapter.itemClicks().subscribe{ (_, task) -> mViewModel.selectTask(task) }
 
-        mDisp += mViewModel.taskSelected().subscribe{ task -> highlightSelectedTask(task) }
         mDisp += mViewModel.taskStatusChanged().subscribe{ task -> viewAdapter.changeTaskStatus(task.id, task.status) }
         mDisp += mViewModel.tasks().subscribe { tasks ->
             addTasks(tasks)
-            highlightSelectedTask(mViewModel.getSelectedTask())
+            mDisp += mViewModel.taskSelected().subscribe{ task -> highlightSelectedTask(task) }
         }
 
         return view

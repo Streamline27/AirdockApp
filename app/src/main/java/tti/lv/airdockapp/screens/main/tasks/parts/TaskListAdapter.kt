@@ -74,7 +74,7 @@ class TaskListAdapter(val ctx : Context, val tasks: MutableList<TaskDTO>) : Recy
             idTextView.text = task.idWithPrefix()
             imgStatus.setImageResource(task.status.getImgResource())
 
-            if (selectedPos == position) view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorLightGrey))
+            if (selectedPos == position) view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorItemSelected))
             else                         view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorWhite))
         }
     }

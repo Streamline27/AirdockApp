@@ -11,6 +11,7 @@ class SharedPreferenceProvider (
 
     fun storeToken(token : String) {
         with(sharedPreferences.edit()) {
+
             putString("auth_token", token)
             apply()
         }
@@ -23,7 +24,17 @@ class SharedPreferenceProvider (
         }
     }
 
-
     fun getToken() : String? = sharedPreferences.getString("auth_token", null)
+
+
+    fun storeUserId(userId : String) {
+        with(sharedPreferences.edit()) {
+            putString("USER_ID", userId)
+            apply()
+        }
+    }
+
+    fun getUserId() : String = sharedPreferences.getString("USER_ID", null)
+
 
 }

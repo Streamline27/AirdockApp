@@ -17,7 +17,6 @@ import tti.lv.airdockapp.R
 import tti.lv.airdockapp.screens.main.tasks.TaskViewModel
 import tti.lv.airdockapp.utilities.idWithPrefix
 import tti.lv.airdockapp.utilities.toDateWithTime
-import tti.lv.airdockapp.utilities.toPrettyString
 import tti.lv.airdockapp.utilities.toShortDateFormat
 import tti.lv.airdockapp.web.dto.TaskDTO
 import javax.inject.Inject
@@ -51,13 +50,14 @@ class TaskDetailsFragment : Fragment() {
 
     fun setActiveTask(task : TaskDTO) {
         with(task) {
-            textWorkOrderId.text  = task.workOrder.title
-            textTaskId.text       = this.idWithPrefix()
-            textTaskTitle.text    = title
-            textStatus.text        = status.toString()
+            textWorkOrderId.text   = task.workOrder.title
+            textTaskId.text        = this.idWithPrefix()
+            textTaskTitle.text     = title
+            textStatus.text        = status.toPrettyString()
             textDateCreated.text   = creationDate.toDateWithTime()
             textDescription.text   = description
             textDatePlannedOn.text = startDate.toShortDateFormat() + " - " + endDate.toShortDateFormat()
+            btnChangeStatus.text   = status.toPrettyString()
         }
     }
 

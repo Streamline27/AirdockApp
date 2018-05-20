@@ -11,7 +11,7 @@ class AuthenticationInterceptor(private val provider: SharedPreferenceProvider) 
         if (token != null && !token.isEmpty()) {
             return chain.proceed(
                     chain.request().newBuilder()
-                            .header("Authorization", token)
+                            .header("Authorization", "Bearer " + token)
                             .build()
             )
         }

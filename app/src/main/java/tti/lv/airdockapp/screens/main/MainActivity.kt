@@ -17,7 +17,7 @@ import tti.lv.airdockapp.screens.main.tasks.TasksFragment
 import tti.lv.airdockapp.utilities.SharedPreferenceProvider
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), RequestsFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var preferenceProvider: SharedPreferenceProvider
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), RequestsFragment.OnFragmentInteraction
 
                 when(item.itemId) {
                     R.id.nav_first_fragment  -> TasksFragment.newInstance("", "").switchTo()
-                    R.id.nav_second_fragment -> RequestsFragment.newInstance("", "").switchTo()
+                    R.id.nav_second_fragment -> RequestsFragment().switchTo()
                     R.id.nav_third_fragment  -> {
                         Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_SHORT).show()
                         preferenceProvider.eraseToken()
@@ -57,8 +57,5 @@ class MainActivity : AppCompatActivity(), RequestsFragment.OnFragmentInteraction
                 .commit()
     }
 
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
 

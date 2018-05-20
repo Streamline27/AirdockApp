@@ -15,22 +15,30 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".screens.main.MainActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".screens.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".screens.AppActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".screens.main.requests.parts.RequestEditActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize">
 
+
+        </activity>
     </application>
 
 </manifest>

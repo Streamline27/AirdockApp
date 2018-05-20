@@ -15,7 +15,6 @@ class TaskDTO (
         var status : Status,
         val workOrder : WorkOrderDTO
 ) {
-
     enum class Status(val isAssignable: Boolean) {
         IN_PROGRESS(true),
         CANCELED(false),
@@ -30,5 +29,10 @@ class TaskDTO (
                             .filter { it.isAssignable }
         }
 
+        fun toPrettyString() =
+                this.toString()
+                        .toLowerCase()
+                        .capitalize()
+                        .replace("_", " ")
     }
 }
