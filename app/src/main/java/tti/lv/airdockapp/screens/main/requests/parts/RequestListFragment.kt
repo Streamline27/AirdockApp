@@ -32,20 +32,35 @@ class RequestListFragment : Fragment() {
         (activity?.application as App).dependencyGraph.inject(this)
 
         val viewManager = LinearLayoutManager(context)
-        mViewAdapter = RequestListAdapter(ArrayList())
+        mViewAdapter = RequestListAdapter(context!!, ArrayList())
 
         view.findViewById<RecyclerView>(R.id.listView_requests).apply {
             layoutManager = viewManager
             adapter = mViewAdapter
         }
 
-        mDisp += mViewModel.requests().subscribe{ requests -> addRequests(requests) }
+        mDisp += mViewAdapter.itemClicks().subscribe{ (_, request) -> mViewModel.selectRequest(request) }
+
+        mDisp += mViewModel.requestUpdateEvent().subscribe{ request -> updateRequest(request) }
+        mDisp += mViewModel.requests().subscribe{ requests ->
+            setRequests(requests)
+            highlightRequest(mViewModel.getActiveRequest())
+        }
+        mDisp += mViewModel.requestSelectedEvent().subscribe{ request -> highlightRequest(request) }
 
         return view
     }
 
-    private fun addRequests(requests : List<RequestDTO>) {
+    private fun highlightRequest(request : RequestDTO?) {
+        if (request != null) mViewAdapter.highlight(request)
+    }
+
+    private fun setRequests(requests : List<RequestDTO>) {
         mViewAdapter.setData(requests)
+    }
+
+    private fun updateRequest(request: RequestDTO) {
+        mViewAdapter.updateRequest(request)
     }
 
     override fun onDetach() {

@@ -70,7 +70,7 @@
                     style="@style/Section"
                     android:elevation="3dp">
 
-                    <!-- Title and status row -->
+                    <!-- Title-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -86,14 +86,15 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
                                 <TextView
-                                    android:id="@+id/textRequestId"
+                                    android:id="@+id/textRequestEditId"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+
                                     android:text="123"
                                     style="@style/Header2"/>
                             </LinearLayout>
                             <TextView
-                                android:id="@+id/textRequestTitle"
+                                android:id="@+id/textRequestEditTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Request caption"
@@ -113,10 +114,12 @@
                         style="@style/SectionContent">
 
                         <EditText
-                            android:id="@+id/editTextRequestDetails"
+                            android:hint="Description"
+                            android:id="@+id/editTextRequestDescription"
                             android:padding="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
                             style="@style/ArticleText"/>
                     </LinearLayout>
 

@@ -62,7 +62,9 @@ class TaskDetailsFragment : Fragment() {
     }
 
     fun setTaskStatus(status : TaskDTO.Status) {
-        textStatus.text = status.toPrettyString()
+        val s = status.toPrettyString()
+        btnChangeStatus.text = s
+        textStatus.text = s
     }
 
     fun openSelectStatusDialog() {

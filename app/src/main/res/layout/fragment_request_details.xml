@@ -129,10 +129,9 @@
             <include layout="@layout/separator_horizontal"></include>
 
             <TextView
-                android:id="@+id/textDescription"
+                android:id="@+id/textRequestDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/long_text_mock"
                 style="@style/ArticleText"
                 />
         </LinearLayout>
