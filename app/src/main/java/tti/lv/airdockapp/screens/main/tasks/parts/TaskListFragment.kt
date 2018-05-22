@@ -56,10 +56,10 @@ class TaskListFragment : Fragment() {
 
         mDisp += viewAdapter.itemClicks().subscribe{ (_, task) -> mViewModel.selectTask(task) }
 
-        mDisp += mViewModel.taskStatusChanged().subscribe{ task -> viewAdapter.changeTaskStatus(task.id, task.status) }
+        mDisp += mViewModel.taskStatusChangeEvent().subscribe{ task -> viewAdapter.changeTaskStatus(task.id, task.status) }
         mDisp += mViewModel.tasks().subscribe { tasks ->
             addTasks(tasks)
-            mDisp += mViewModel.taskSelected().subscribe{ task -> highlightSelectedTask(task) }
+            mDisp += mViewModel.taskSelections().subscribe{ task -> highlightSelectedTask(task) }
         }
 
         return view

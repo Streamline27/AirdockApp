@@ -8,67 +8,136 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/panel_bg"
         style="@style/Section"
         android:elevation="3dp">
 
+        <!-- Title and status row -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="0.75"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
+            <!-- title and ids -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.75"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- Ids and work order -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/textWorkOrderId"
+                        style="@style/Header2"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Header2"
+                        android:text=" / "/>
+                    <TextView
+                        android:id="@+id/textTaskId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Header2"/>
+                </LinearLayout><!-- End ids and work order -->
+                <TextView
+                    android:id="@+id/textTaskTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Header1"/>
+            </LinearLayout><!-- End titles -->
+
+            <!-- Status section -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Status:"
+                    style="@style/Header2"
+                    android:layout_marginRight="6dp"
+                    android:layout_height="wrap_content"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnChangeStatus"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout><!-- End status section -->
+
+        </LinearLayout> <!-- End title and status row -->
+
+        <!-- Buttons row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/textWorkOrderId"
-                    style="@style/Header2"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Header2"
-                    android:text=" / "/>
-                <TextView
-                    android:id="@+id/textTaskId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Header2"/>
-            </LinearLayout>
-            <TextView
-                android:id="@+id/textTaskTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Header1"/>
-        </LinearLayout><!-- End titles -->
 
-        <!-- Status section -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="0.25"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Status:"
-                style="@style/Header2"
-                android:layout_marginRight="6dp"
-                android:layout_height="wrap_content"/>
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnChangeStatus"
-                android:text="In progress"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/colorPrimary"
-                android:layout_gravity="center_vertical"/>
-        </LinearLayout><!-- End status section -->
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnComplete"
+                    android:text="Complete"
+                    android:visibility="invisible"
+                    android:layout_marginLeft="-3dp"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnBegin"
+                    android:text="Begin"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnSuspend"
+                    android:visibility="gone"
+                    android:text="Suspend"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnContinue"
+                    android:visibility="gone"
+                    android:text="Continue"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnTodo"
+                    android:visibility="gone"
+                    android:text="Todo"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+        </LinearLayout><!-- End buttons row -->
+
 
     </LinearLayout> <!-- End header -->
 

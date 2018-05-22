@@ -41,14 +41,19 @@ class RequestListFragment : Fragment() {
 
         mDisp += mViewAdapter.itemClicks().subscribe{ (_, request) -> mViewModel.selectRequest(request) }
 
+        mDisp += mViewModel.requestStatusChangeEvent().subscribe { req -> setRequestStatus(req.id, req.status) }
         mDisp += mViewModel.requestUpdateEvent().subscribe{ request -> updateRequest(request) }
+        mDisp += mViewModel.requestSelectedEvent().subscribe{ request -> highlightRequest(request) }
         mDisp += mViewModel.requests().subscribe{ requests ->
             setRequests(requests)
             highlightRequest(mViewModel.getActiveRequest())
         }
-        mDisp += mViewModel.requestSelectedEvent().subscribe{ request -> highlightRequest(request) }
 
         return view
+    }
+
+    private fun setRequestStatus(id: String, status: RequestDTO.Status) {
+        mViewAdapter.changeRequestStatus(id, status)
     }
 
     private fun highlightRequest(request : RequestDTO?) {

@@ -17,15 +17,19 @@ class RequestViewModel @Inject constructor(
 ){
     private val requestsState         = BehaviorSubject.create<List<RequestDTO>>()
     private val requestSelectedState  = BehaviorSubject.create<RequestDTO>()
+    private val requestStatusState = BehaviorSubject.create<RequestDTO.Status>()
 
-    private val requestSelectedEvent = PublishSubject.create<RequestDTO>()
-    private val editClickedEvent    = PublishSubject.create<Any>()
-    private val requestUpdatedEvent = PublishSubject.create<RequestDTO>()
+    private val requestSelectedEvent     = PublishSubject.create<RequestDTO>()
+    private val editClickedEvent         = PublishSubject.create<Any>()
+    private val requestUpdatedEvent      = PublishSubject.create<RequestDTO>()
+    private val requestStatusChangeEvent =  PublishSubject.create<RequestDTO>()
+
 
     private val currentUserId : String = preferences.getUserId();
 
     init {
         requestSelectedState.subscribe{ req -> requestSelectedEvent.onNext(req) }
+        requestSelectedState.subscribe{ req -> requestStatusState.onNext(req.status)}
     }
 
     fun fetchRequests() {
@@ -56,6 +60,7 @@ class RequestViewModel @Inject constructor(
         }
     }
 
+
     private fun updateRequestInState(request: RequestDTO) {
         val requests = requestsState.value
         if (requests != null) {
@@ -67,6 +72,53 @@ class RequestViewModel @Inject constructor(
                 requestsState.onNext(newRequests)
             }
         }
+    }
+
+    fun setRequestStatus(status : RequestDTO.Status) {
+        if (someRequestIsSelected()) {
+            val id = requestSelectedState.value.id
+            requestApi.updateTaskStatus(id, status)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe{ request ->
+                        requestStatusState.onNext(request.status)
+                        requestStatusChangeEvent.onNext(request)
+                    }
+        }
+    }
+
+    fun deleteRequest() {
+        if (someRequestIsSelected()) {
+            requestApi.deleteRequest(requestSelectedState.value.id)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe{ id ->
+                        val requests = requestsState.value
+                        val selectedRequest = requestSelectedState.value
+                        if (requests != null) {
+                            val index = requests.indexOfFirst { it.id == selectedRequest.id }
+                            val without = requests.toMutableList().apply { removeAt(index) }
+                            val selectedPos = index-1
+                            requestsState.onNext(without)
+                            requestSelectedState.onNext(without[selectedPos])
+                        }
+                    }
+        }
+    }
+
+
+    fun deleteRequestFromState() {
+
+    }
+
+    fun createDraftRequest() {
+        requestApi.createDraftRequest()
+                .subscribeOn(Schedulers.io())
+                .subscribe{ request ->
+                    if (someRequestIsSelected()) {
+                        val requests = requestsState.value.plus(request)
+                        requestsState.onNext(requests)
+                        requestSelectedState.onNext(request)
+                    }
+                }
     }
 
     fun editClicks() {
@@ -83,7 +135,9 @@ class RequestViewModel @Inject constructor(
     fun requestUpdateEvent()    = requestUpdatedEvent.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     fun requestEditClickEvent() = editClickedEvent.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     fun requestSelectedEvent()  =  requestSelectedEvent.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun requestStatusChangeEvent() = requestStatusChangeEvent.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
     fun requests()          = requestsState.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     fun requestSelections() = requestSelectedState.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun requestStatuses()   = requestStatusState.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }

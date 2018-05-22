@@ -20,6 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <!-- Title and id -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="0.75"
@@ -41,9 +43,9 @@
                     android:id="@+id/textRequestTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Request caption"
+                    android:hint="Title"
                     style="@style/Header1"/>
-            </LinearLayout><!-- End titles -->
+            </LinearLayout><!-- End title and id -->
             <!-- Status -->
             <LinearLayout
                 android:layout_width="0dp"
@@ -62,7 +64,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnChangeStatus"
-                    android:text="In progress"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorPrimary"
                     android:layout_gravity="center_vertical"/>
@@ -84,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/btnSave"
                     android:text="Save"
+                    android:visibility="invisible"
                     android:layout_marginLeft="-3dp"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorPrimary"
@@ -93,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/btnEdit"
                     android:text="Edit"
+                    android:visibility="invisible"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorPrimary"
                     android:layout_gravity="center_vertical"/>
@@ -100,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnDelete"
+                    android:visibility="invisible"
                     android:text="Delete"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorPrimary"
@@ -129,6 +133,7 @@
             <include layout="@layout/separator_horizontal"></include>
 
             <TextView
+                android:hint="Place for your description"
                 android:id="@+id/textRequestDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.disposables.Disposable
@@ -25,9 +27,7 @@ class RequestDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_request_details, container, false)
-
-        return view
+        return inflater.inflate(R.layout.fragment_request_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,8 +38,43 @@ class RequestDetailsFragment : Fragment() {
 
         mDisp += mViewModel.requestSelectedEvent().subscribe{ request -> setActiveRequest(request) }
         mDisp += mViewModel.requestUpdateEvent().subscribe{ request -> setActiveRequest(request) }
+        mDisp += mViewModel.requestStatuses().subscribe{ status -> setActiveReqestStatus(status) }
 
         mDisp += btnEdit.clicks().subscribe{ launchEditRequestActivity() }
+
+        mDisp += btnSave.clicks().subscribe{ setRequestStatus(RequestDTO.Status.PENDING) }
+        mDisp += btnDelete.clicks().subscribe{ deleteRequest() }
+
+    }
+
+    public fun deleteRequest() {
+        mViewModel.deleteRequest()
+    }
+
+    public fun setRequestStatus(status : RequestDTO.Status) {
+        mViewModel.setRequestStatus(status)
+    }
+
+    private fun setActiveReqestStatus(status: RequestDTO.Status?) {
+
+        if (status!= null) btnChangeStatus.setText(status.toPrettyString())
+
+        if (status == RequestDTO.Status.DRAFT) {
+            btnEdit.visibility   = VISIBLE
+            btnDelete.visibility = VISIBLE
+            btnSave.visibility   = VISIBLE
+        }
+        else if (status == RequestDTO.Status.PENDING) {
+            btnEdit.visibility   = VISIBLE
+            btnDelete.visibility = GONE
+            btnSave.visibility   = GONE
+        }
+        else {
+            btnEdit.visibility   = GONE
+            btnDelete.visibility = GONE
+            btnSave.visibility   = GONE
+        }
+
     }
 
     private fun setActiveRequest(request : RequestDTO) {

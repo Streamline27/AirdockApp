@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.subjects.PublishSubject
@@ -24,7 +25,8 @@ class RequestListAdapter(
     inner class ViewHolder(
             val view           : View,
             val textReqId      : TextView,
-            val textReqCaption : TextView
+            val textReqCaption : TextView,
+            val imgStatus      : ImageView
     ) : RecyclerView.ViewHolder(view)
     {
         init {
@@ -44,8 +46,9 @@ class RequestListAdapter(
 
         val textReqId      = view.findViewById<TextView>(R.id.item_request_id);
         val textReqCaption = view.findViewById<TextView>(R.id.item_request_caption)
+        val imageStatus    = view.findViewById<ImageView>(R.id.imgStatus)
 
-        return ViewHolder(view, textReqId, textReqCaption)
+        return ViewHolder(view, textReqId, textReqCaption, imageStatus)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -54,6 +57,7 @@ class RequestListAdapter(
 
             textReqId.text      = req.id
             textReqCaption.text = req.title
+            imgStatus.setImageResource(req.status.getImageResource())
 
             if (selectedPos == position) view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorItemSelected))
             else                         view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorWhite))
@@ -72,6 +76,14 @@ class RequestListAdapter(
             notifyItemChanged(selectedPos)
         }
         else selectedPos = 0;
+    }
+
+    fun changeRequestStatus(requestId : String, status : RequestDTO.Status) {
+        val position = requests.indexOfFirst { it.id == requestId }
+        if (position != -1) {
+            requests[position].status = status
+            notifyItemChanged(position)
+        }
     }
 
     fun updateRequest(request: RequestDTO) {

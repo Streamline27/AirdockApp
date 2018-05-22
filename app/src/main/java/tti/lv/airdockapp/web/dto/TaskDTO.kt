@@ -1,6 +1,7 @@
 package tti.lv.airdockapp.web.dto
 
 import com.google.gson.annotations.SerializedName
+import tti.lv.airdockapp.R
 import java.util.*
 
 class TaskDTO (
@@ -20,7 +21,8 @@ class TaskDTO (
         CANCELED(false),
         TODO(true),
         DONE(true),
-        LATER(false)
+        LATER(false),
+        SUSPENDED(true)
         ;
 
         companion object {
@@ -34,5 +36,15 @@ class TaskDTO (
                         .toLowerCase()
                         .capitalize()
                         .replace("_", " ")
+
+        fun getImgResource() =
+                when(this) {
+                    TaskDTO.Status.IN_PROGRESS -> R.mipmap.ic_status_progress
+                    TaskDTO.Status.CANCELED    -> R.mipmap.ic_status_canceled
+                    TaskDTO.Status.TODO        -> R.mipmap.ic_status_todo
+                    TaskDTO.Status.DONE        -> R.mipmap.ic_status_done
+                    TaskDTO.Status.LATER       -> R.mipmap.ic_status_later
+                    TaskDTO.Status.SUSPENDED   -> R.mipmap.ic_status_suspended
+                }
     }
 }

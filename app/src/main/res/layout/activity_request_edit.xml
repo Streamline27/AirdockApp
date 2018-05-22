@@ -93,11 +93,12 @@
                                     android:text="123"
                                     style="@style/Header2"/>
                             </LinearLayout>
-                            <TextView
+                            <EditText
                                 android:id="@+id/textRequestEditTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Request caption"
+                                android:hint="Place your title here"
+                                android:background="@android:color/transparent"
                                 style="@style/Header1"/>
                         </LinearLayout><!-- End titles -->
                     </LinearLayout><!-- End title and status row -->
@@ -114,7 +115,7 @@
                         style="@style/SectionContent">
 
                         <EditText
-                            android:hint="Description"
+                            android:hint="Place your description here"
                             android:id="@+id/editTextRequestDescription"
                             android:padding="8dp"
                             android:layout_width="match_parent"

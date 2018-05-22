@@ -50,8 +50,8 @@ class RequestEditActivity : AppCompatActivity() {
     }
 
     fun setActiveRequest(request : RequestDTO) {
-        textRequestEditTitle.text = request.title
-        textRequestEditId.text    = request.id
+        textRequestEditTitle.setText(request.title)
+        textRequestEditId.setText(request.id)
         editTextRequestDescription.setText(request.description)
     }
 

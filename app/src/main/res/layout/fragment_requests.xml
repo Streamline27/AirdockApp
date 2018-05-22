@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_below="@+id/toolbar_layout"
     android:layout_above="@+id/bottom_navigation"
@@ -51,6 +52,17 @@
             android:background="@color/colorPrimary"/>
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_create_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/colorSkyBlue"
+                android:layout_gravity="left|bottom"
+                android:layout_marginLeft="0dp"
+                android:src="@mipmap/ic_create"
+                android:layout_margin="16dp"
+                android:layout_marginStart="0dp" />
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>

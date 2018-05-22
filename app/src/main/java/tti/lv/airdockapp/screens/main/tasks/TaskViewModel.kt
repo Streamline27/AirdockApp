@@ -1,6 +1,5 @@
 package tti.lv.airdockapp.screens.main.tasks
 
-import android.content.SharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -17,10 +16,12 @@ class TaskViewModel @Inject constructor(
         private val taskApi : TaskApi,
         private val preferences: SharedPreferenceProvider
 ) {
-    private val taskSelected  = BehaviorSubject.create<TaskDTO>()
+    private val taskSelectedState  = BehaviorSubject.create<TaskDTO>()
+    private val taskStatusState    = BehaviorSubject.create<TaskDTO.Status>()
+
 //    private val tasksFetched  = BehaviorSubject.create<List<TaskDTO>>()
     private val tasksFetched  = PublishSubject.create<List<TaskDTO>>()
-    private val statusChanged = PublishSubject.create<TaskSmallDTO>()
+    private val statusChanged = BehaviorSubject.create<TaskSmallDTO>()
 
     /**
      * TODO: Fetch tasks first time and on push notification then
@@ -36,25 +37,33 @@ class TaskViewModel @Inject constructor(
     }
 
     fun updateTaskStatus(status : TaskDTO.Status) {
-        val selectedTask = taskSelected.value
+        val selectedTask = taskSelectedState.value
         if (selectedTask != null) {
             taskApi.updateTaskStatus(selectedTask.id, status)
                     .subscribeOn(Schedulers.io())
                     .subscribe{ task ->
                         statusChanged.onNext(task)
+                        taskStatusState.onNext(task.status)
                     }
         }
     }
 
+    fun currentStatus() = taskSelectedState.value.status
+
     fun selectTask(task : TaskDTO) {
-        taskSelected.onNext(task)
+        taskSelectedState.onNext(task)
+        taskStatusState.onNext(task.status)
     }
 
-    fun someStatusIsSelected() = taskSelected.value != null
-    fun getSelectedTaskStatus() = this.taskSelected.value.status
-    fun getSelectedTask() = taskSelected.value
+    fun someStatusIsSelected() = taskSelectedState.value != null
+    fun getSelectedTaskStatus() = this.taskSelectedState.value.status
 
-    fun taskSelected() = taskSelected.observeOn(AndroidSchedulers.mainThread())
+    fun taskStatusChanges() = taskStatusState.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+    fun taskSelections() = taskSelectedState.observeOn(AndroidSchedulers.mainThread())
     fun tasks() = tasksFetched.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-    fun taskStatusChanged() = statusChanged.observeOn(AndroidSchedulers.mainThread())
+
+
+
+    fun taskStatusChangeEvent() = statusChanged.observeOn(AndroidSchedulers.mainThread())
 }

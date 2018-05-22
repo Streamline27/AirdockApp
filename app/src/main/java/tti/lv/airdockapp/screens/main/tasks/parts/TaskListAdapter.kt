@@ -12,7 +12,6 @@ import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import tti.lv.airdockapp.R
-import tti.lv.airdockapp.utilities.getImgResource
 import tti.lv.airdockapp.utilities.idWithPrefix
 import tti.lv.airdockapp.web.dto.TaskDTO
 
