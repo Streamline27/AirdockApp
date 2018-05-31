@@ -22,10 +22,6 @@ import tti.lv.airdockapp.utilities.toShortDateFormat
 import tti.lv.airdockapp.web.dto.TaskDTO
 import javax.inject.Inject
 
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class TaskDetailsFragment : Fragment() {
 
     @Inject lateinit var mViewModel: TaskViewModel
@@ -43,7 +39,6 @@ class TaskDetailsFragment : Fragment() {
         return view
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,7 +47,6 @@ class TaskDetailsFragment : Fragment() {
         mDisp += btnSuspend.clicks().subscribe{ mViewModel.updateTaskStatus(TaskDTO.Status.SUSPENDED ) }
         mDisp += btnContinue.clicks().subscribe{ mViewModel.updateTaskStatus(TaskDTO.Status.IN_PROGRESS)}
         mDisp += btnTodo.clicks().subscribe{ mViewModel.updateTaskStatus(TaskDTO.Status.TODO)}
-//        mDisp += btnChangeStatus.clicks().subscribe{ openSelectStatusDialog() }
 
     }
 
@@ -111,40 +105,9 @@ class TaskDetailsFragment : Fragment() {
         }
     }
 
-    fun openSelectStatusDialog() {
-
-        val items =
-                TaskDTO.Status.assignableValues()
-                        .filter { it != mViewModel.getSelectedTaskStatus()}
-
-        val stringItems =
-                items.map { it.toPrettyString() }
-                        .toTypedArray()
-
-        val builder = AlertDialog.Builder(context!!)
-        builder.setTitle("Select status:")
-                .setItems(stringItems, object  : DialogInterface.OnClickListener {
-                              override fun onClick(dialog: DialogInterface?, index: Int) {
-                                     mViewModel.updateTaskStatus(items[index])
-                         }
-                })
-                .create()
-                .show()
-    }
-
     override fun onDetach() {
         super.onDetach()
         mDisp.forEach{ it.dispose() }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                TaskDetailsFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-    }
 }

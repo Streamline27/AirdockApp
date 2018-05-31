@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
                 when(item.itemId) {
-                    R.id.nav_first_fragment  -> TasksFragment.newInstance("", "").switchTo()
+                    R.id.nav_first_fragment  -> TasksFragment().switchTo()
                     R.id.nav_second_fragment -> RequestsFragment().switchTo()
                     R.id.nav_third_fragment  -> {
                         Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_SHORT).show()

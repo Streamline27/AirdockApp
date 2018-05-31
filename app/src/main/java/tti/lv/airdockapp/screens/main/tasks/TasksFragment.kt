@@ -13,25 +13,10 @@ import tti.lv.airdockapp.screens.main.tasks.parts.TaskHistoryFragment
 import tti.lv.airdockapp.screens.main.tasks.parts.TaskListFragment
 import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class TasksFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
-
     @Inject lateinit var mViewModel: TaskViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,24 +25,13 @@ class TasksFragment : Fragment() {
         (activity?.application as App).dependencyGraph.inject(this)
 
         childFragmentManager.beginTransaction()
-                .replace(R.id.task_list_container, TaskListFragment.newInstance("", ""))
-                .replace(R.id.task_details_container, TaskDetailsFragment.newInstance("", ""))
-                .replace(R.id.task_history_container, TaskHistoryFragment.newInstance("", ""))
+                .replace(R.id.task_list_container, TaskListFragment())
+                .replace(R.id.task_details_container, TaskDetailsFragment())
+                .replace(R.id.task_history_container, TaskHistoryFragment())
                 .commit()
 
         mViewModel.fetchTasks()
 
         return inflater.inflate(R.layout.fragment_tasks, container, false)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                TasksFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 }
